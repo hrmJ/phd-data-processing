@@ -2737,7 +2737,7 @@ class Word:
         if case == 'g':
             #1. Genetiivi
             if not Word.genlist:
-                with open('{}/monograph/data/random/genlist.txt'.format(phddir)) as f:
+                with open('genlist.txt') as f:
                     Word.gen = f.read().splitlines()
             if self.finitehead.lemma in Word.genlist:
                 print('genlist!')
@@ -2756,14 +2756,14 @@ class Word:
         elif case == 'd':
             #2. Datiivi
             if not Word.dativelist:
-                with open('{}/monograph/data/random/dativelist.txt'.format(phddir)) as f:
+                with open('dativelist.txt') as f:
                     Word.dativelist = f.read().splitlines()
             if self.finitehead.lemma in Word.dativelist:
                 return True
         elif case == 'i':
             #3. instrumentaali
             if not Word.instrlist:
-                with open('{}/monograph/data/random/instrlist.txt'.format(phddir)) as f:
+                with open('instrlist.txt') as f:
                     Word.instrlist = f.read().splitlines()
             if self.finitehead.lemma in Word.instrlist:
                 return True
