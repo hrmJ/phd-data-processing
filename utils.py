@@ -140,7 +140,7 @@ class Group():
         for corpus, data in self.corpora.items():
             filt = filters.Filter(data, self.lang)
             # Quant vaikuttaa muun muassa objektitulkinnan tiukkuuteen -->
-            filt.ByOrder('SVO', quant)
+            filt.ByOrder('SOV', quant)
             if quant:
                 #Tarkempi filtteri kvantitatiivista analyysia varten
                 filt.DirectLinkToVerb()
