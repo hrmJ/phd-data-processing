@@ -5,6 +5,14 @@ psql-tallennettua conll9-dataa
 
 # Riippuvuuksia
 
+
+```
+#Universe-repo käyttöön
+sudo apt-get install software-properties-common
+sudo apt-add-repository universe
+sudo apt-get update
+```
+
 apt install python3-psycopg2
 apt install python3-lxml
 apt install python3-sqlalchemy

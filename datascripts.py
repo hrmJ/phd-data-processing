@@ -105,7 +105,7 @@ def Quant():
     sg = subgroups['lc0a']
     sg.Load('press_fi')
     filt = utils.filters.Filter(sg.corpora['press_fi'],'fi')
-    filt.ByOrder('SVO', False)
+    filt.ByOrder('SOV', False)
     filt.DirectLinkToVerb()
     filt.Ohjelmatiedot()
     input('...')
