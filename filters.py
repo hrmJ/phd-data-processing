@@ -106,8 +106,8 @@ class Filter():
                     match.TestProDrop(self.lang)
                 if not (sloc==0 and match.prodrop == 'No'):
                     #4. Testaa järjestystä, mutta katso epäonnistuneeksi, jos ei subj eikä myöskään pro-drop
-                    orders = {order: SOV(sloc,vloc,oloc)}
-                    if orders[order]:
+                    orders = {"SVO": SVO, "SOV" : SOV}
+                    if orders[order](sloc,vloc,oloc):
                         passed.append(match)
         self.UpdatePassed(passed, "ByOrder")
 
