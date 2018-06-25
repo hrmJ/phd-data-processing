@@ -140,7 +140,7 @@ class Group():
             filt = filters.Filter(data, self.lang)
             # Quant vaikuttaa muun muassa objektitulkinnan tiukkuuteen -->
             for order in ["SVO", "SOV"]:
-                if not self.results[order]:
+                if order not in self.results:
                     self.results[order] = list()
                 filt.ByOrder(order, quant)
                 if quant:
