@@ -137,9 +137,11 @@ class Group():
         print("Filtering out SVO and SOV sentences for {}.{}".format(self.lang, self.name))
         self.results = {}
         for corpus, data in self.corpora.items():
-            filt = filters.Filter(data, self.lang)
+            print(corpus)
             # Quant vaikuttaa muun muassa objektitulkinnan tiukkuuteen -->
             for order in ["SVO", "SOV"]:
+                filt = filters.Filter(data, self.lang)
+                print("TADAA!!: " + order)
                 if order not in self.results:
                     self.results[order] = list()
                 filt.ByOrder(order, quant)

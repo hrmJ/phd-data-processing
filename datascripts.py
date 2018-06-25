@@ -6,7 +6,7 @@ import time
 from sys import platform as _platform
 import searchutils
 import menus
-result_data_address = '/tmp'
+result_data_address = '/tmp/results'
 final_data_address = '/tmp'
 pickedamount = 20
 
@@ -200,7 +200,8 @@ if __name__ == "__main__":
             quant=True
             searchutils.StartLogger('/tmp/groups_ru.log')
             counter = 0
-            for subgroupname, subgroup in groups.ru.subgroups.items():
+            #for subgroupname, subgroup in groups.ru.subgroups.items():
+            for subgroupname, subgroup in groups.ru.testgroups.items():
                 counter += 1
                 res_filename = '{}/ru/{}_svo_quantdata.json'.format(result_data_address, subgroupname)
                 if not os.path.isfile(res_filename):
