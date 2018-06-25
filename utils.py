@@ -133,15 +133,15 @@ class Group():
                 self.corpora[corpus] = self.currentsearch.results
                 self.currentsearch.Reset()
 
-    def GetSVO(self, quant=False):
-        print("Filtering out SVO sentences for {}.{}".format(self.lang, self.name))
-        self.svo = searchutils.CorpusDict(self.lang)
-        self.results['svo'] = list()
-        self.results['sov'] = list()
+    def GetSentences(self, quant=False):
+        print("Filtering out SVO and SOV sentences for {}.{}".format(self.lang, self.name))
+        self.results = {}
         for corpus, data in self.corpora.items():
             filt = filters.Filter(data, self.lang)
             # Quant vaikuttaa muun muassa objektitulkinnan tiukkuuteen -->
             for order in ["SVO", "SOV"]:
+                if not self.results[order]:
+                    self.results[order] = list()
                 filt.ByOrder(order, quant)
                 if quant:
                     #Tarkempi filtteri kvantitatiivista analyysia varten
@@ -174,7 +174,7 @@ class Group():
         alaryhmittäin json-tiedostoihin"""
         searchutils.Search.lengthmeter = self.lengthmeter
         self.GetData()
-        self.GetSVO(quant)
+        self.GetSentences(quant)
         self.SaveResults(quant)
 
 
