@@ -106,7 +106,7 @@ class Filter():
                     match.TestProDrop(self.lang)
                 if not (sloc==0 and match.prodrop == 'No'):
                     #4. Testaa järjestystä, mutta katso epäonnistuneeksi, jos ei subj eikä myöskään pro-drop
-                    orders = {'SOV':SOV(sloc,vloc,oloc)}
+                    orders = {order: SOV(sloc,vloc,oloc)}
                     if orders[order]:
                         passed.append(match)
         self.UpdatePassed(passed, "ByOrder")
@@ -147,3 +147,54 @@ def FiniteHeadDobj(matches, ttype="Positive"):
         if f.FilterByFiniteHeadDep():
             passed.append(match)
     return passed
+
+def DefineLocationInSentence(comps, order, prodrop, p2active):
+    """
+    Määrittelee datan perusteella ajanilmauksen sijainnin
+    joko SVO- tai SOV-lauseessa.
+
+    Comps-taulukko sisältää vertailun tulokset, niin että 
+    jos comps[KEY] = TRUE --> ajanilmaus sijaitsee ennen KEY:tä, esim.
+    comps[nsubj] = TRUE --> ajanilmaus sijaitsee ennen subjektia
+
+    """
+    if order == "SVO":
+        #Normaalit SVO-lauseet
+        if prodrop == 'No':
+            if comps['nsubj'] and comps['verb'] and comps['dobj']:
+                return "S1"
+            elif not comps['nsubj'] and comps['verb'] and comps['dobj']:
+                return "S2"
+            elif not comps['nsubj'] and not comps['verb'] and comps['dobj']:
+                return "S3"
+            elif not comps['nsubj'] and not comps['verb'] and not comps['dobj']:
+                return "S4"
+        else:
+            #subjektittomat tapaukset: näitä ei oteta lopulliseen
+            if comps['verb'] and comps['dobj']:
+                return "S2"
+            elif not comps['verb'] and comps['dobj']:
+                return "S3"
+            elif not comps['verb'] and not comps['dobj']:
+                return "S4"
+    elif order == "SOV":
+        if prodrop == 'No':
+            #Normaalit SOV-lauseet
+            if comps['nsubj'] and comps['verb'] and comps['dobj']:
+                return "S1"
+            elif not comps['nsubj'] and comps['dobj'] and comps["verb"]:
+                return "S2"
+            elif not comps['nsubj'] and not comps['dobj'] and comps['verb']:
+                return "S3"
+            elif not comps['nsubj'] and not comps['verb'] and not comps['dobj']:
+                return "S4"
+        else:
+            #subjektittomat tapaukset: näitä ei oteta lopulliseen
+            if comps['verb'] and comps['dobj']:
+                return "beforeverb"
+            elif not comps['verb'] and comps['dobj']:
+                return "beforeobject"
+            elif not comps['verb'] and not comps['dobj']:
+                return "afterobject"
+
+    return "failed"

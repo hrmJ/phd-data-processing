@@ -24,6 +24,7 @@ import json
 from sys import platform as _platform
 #from analysistools import InsertDeprelColumns, ListSisters
 import  get_nkrja_json as nkrjamodule
+from filters import DefineLocationInSentence
 
 
 
@@ -1633,7 +1634,7 @@ class Match:
 
         return True
 
-    def TransitiveSentenceDistancies(self, p2active=False, lang='fi', sentence=None, strict=False, stop=False):
+    def TransitiveSentenceDistancies(self, p2active=False, lang='fi', sentence=None, strict=False, stop=False, order="SVO"):
         """ If the word's finite head has a dobj as its dependent, compare the position of the match and the dobj  """
  
         stop=False
@@ -1710,32 +1711,7 @@ class Match:
             if thiscomp == 'failed':
                 return "failed"
 
-        if self.prodrop == 'No':
-            if not p2active:
-                if not comps['verb'] and comps ['dobj']:
-                    return "beforeobject"
-                elif not comps['verb'] and not comps['dobj']:
-                    return "afterobject"
-                elif comps['verb'] and comps['dobj']:
-                    return "beforeverb"
-            else:
-                if comps['nsubj'] and comps['verb'] and comps['dobj']:
-                    return "beforeverb_and_subject"
-                elif not comps['nsubj'] and comps['verb'] and comps['dobj']:
-                    return "beforeverb"
-                elif not comps['nsubj'] and not comps['verb'] and comps['dobj']:
-                    return "beforeobject"
-                elif not comps['nsubj'] and not comps['verb'] and not comps['dobj']:
-                    return "afterobject"
-        else:
-                if comps['verb'] and comps['dobj']:
-                    return "beforeverb"
-                elif not comps['verb'] and comps['dobj']:
-                    return "beforeobject"
-                elif not comps['verb'] and not comps['dobj']:
-                    return "afterobject"
-
-        return "failed"
+        return DefineLocationInSentence(comps, order, self.prodrop, p2active)
 
 
 

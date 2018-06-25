@@ -137,19 +137,28 @@ class Group():
         print("Filtering out SVO sentences for {}.{}".format(self.lang, self.name))
         self.svo = searchutils.CorpusDict(self.lang)
         self.results['svo'] = list()
+        self.results['sov'] = list()
         for corpus, data in self.corpora.items():
             filt = filters.Filter(data, self.lang)
             # Quant vaikuttaa muun muassa objektitulkinnan tiukkuuteen -->
-            filt.ByOrder('SOV', quant)
-            if quant:
-                #Tarkempi filtteri kvantitatiivista analyysia varten
-                filt.DirectLinkToVerb()
-                filt.Ohjelmatiedot()
-
-            print('\t Defining distancies for {}...'.format(corpus))
-            if filt.passed:
-                for result in filt.passed:
-                    self.results['svo'].append(result.PrintInfoDict({'location':result.TransitiveSentenceDistancies(True,self.lang,result.matchedsentence), 'corpus': corpus, 'sourcetext':cons.GetMetaRow(result, corpus, self.lang)}))
+            for order in ["SVO", "SOV"]:
+                filt.ByOrder(order, quant)
+                if quant:
+                    #Tarkempi filtteri kvantitatiivista analyysia varten
+                    filt.DirectLinkToVerb()
+                    filt.Ohjelmatiedot()
+                print('\t Defining distancies for {} {}...'.format(order, corpus))
+                if filt.passed:
+                    for result in filt.passed:
+                        self.results[order].append(
+                                result.PrintInfoDict(
+                                    {
+                                        'location':result.TransitiveSentenceDistancies(True,self.lang,result.matchedsentence,order=order),
+                                        'corpus': corpus, 
+                                        'sourcetext':cons.GetMetaRow(result, corpus, self.lang)
+                                    }
+                                    )
+                                )
 
     def SaveResults(self, quant):
         print('Saving the results to {}'.format(result_data_address))
