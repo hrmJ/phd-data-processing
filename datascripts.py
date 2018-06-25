@@ -174,70 +174,69 @@ def AnalyzeGroup(groupname, language):
 
 if __name__ == "__main__":
 
-    try:
-        if sys.argv[1] == "allfi":
-            #Jos tarkoitus analysoida kaikki, mitä on. VIE KAUAN!
-            import utils
-            import groups.fi
-            #import groups.ru
-            quant=True
-            searchutils.StartLogger('/tmp/groups.log')
-            counter = 0
-            for subgroupname, subgroup in groups.fi.subgroups.items():
-                counter += 1
-                res_filename = '{}/fi/{}_svo_quantdata.json'.format(result_data_address, subgroupname)
-                if not os.path.isfile(res_filename):
-                    searchutils.logging.info("STARTING "  + subgroup.name + " ({} / {})".format(counter, len(groups.fi.subgroups)))
-                    subgroup.Analyze(quant)
-                    searchutils.logging.info(subgroup.name + "DONE.")
-                else:
-                    searchutils.logging.info(subgroup.name + "already analyzed, skipping...")
-
-        elif sys.argv[1] == "allru":
-            #Jos tarkoitus analysoida kaikki, mitä on. VIE KAUAN!
-            import utils
-            import groups.ru
-            quant=True
-            searchutils.StartLogger('/tmp/groups_ru.log')
-            counter = 0
-            #for subgroupname, subgroup in groups.ru.subgroups.items():
-            for subgroupname, subgroup in groups.ru.testgroups.items():
-                counter += 1
-                res_filename = '{}/ru/{}_svo_quantdata.json'.format(result_data_address, subgroupname)
-                if not os.path.isfile(res_filename):
-                    searchutils.logging.info("STARTING "  + subgroup.name + " ({} / {})".format(counter, len(groups.ru.subgroups)))
-                    subgroup.Analyze(quant)
-                    searchutils.logging.info(subgroup.name + "DONE.")
-                else:
-                    searchutils.logging.info(subgroup.name + "already analyzed, skipping...")
-        elif sys.argv[1] == "test":
-            print("Entering test mode....")
-            import utils
-            from groups.fi import subgroups
-            #from groups.ru import subgroups
-            subgroups['lc0a'].Analyze(True,True)
-            sys.exit(0)
-        elif len(sys.argv)>1:
-            import utils
-            if sys.argv[1] == "fi":
-                import groups.fi as agroups
-            if sys.argv[1] == "ru":
-                import groups.ru as agroups
-            subgroupname = sys.argv[2]
-            subgroup =  agroups.subgroups[subgroupname]
-            searchutils.StartLogger('/tmp/groups.log')
+    if sys.argv[1] == "allfi":
+        #Jos tarkoitus analysoida kaikki, mitä on. VIE KAUAN!
+        import utils
+        import groups.fi
+        #import groups.ru
+        quant=True
+        searchutils.StartLogger('/tmp/groups.log')
+        counter = 0
+        for subgroupname, subgroup in groups.fi.subgroups.items():
+            counter += 1
             res_filename = '{}/fi/{}_svo_quantdata.json'.format(result_data_address, subgroupname)
-            searchutils.logging.info("STARTING "  + subgroup.name)
-            subgroup.Analyze(True)
-            searchutils.logging.info(subgroup.name + "DONE.")
+            if not os.path.isfile(res_filename):
+                searchutils.logging.info("STARTING "  + subgroup.name + " ({} / {})".format(counter, len(groups.fi.subgroups)))
+                subgroup.Analyze(quant)
+                searchutils.logging.info(subgroup.name + "DONE.")
+            else:
+                searchutils.logging.info(subgroup.name + "already analyzed, skipping...")
 
-    except IndexError:
-        #Jos ajat ohjelmana ja valitset itse, mikä ryhmä analysoidaan
-        mainmenu = menus.multimenu({'q':'lopeta','a':'analysoi yksittäisiä ryhmiä','k':'kerää dataa','kva':'Tallenna dataa kvantitatiivista analyysia varten'})
-        actions  = {'a':ListAnalyzedGroups,'q':Quit,'k':CollectData,'kva':CollectQuantData}
-        mainmenu.answer = ""
-        while mainmenu.answer != 'q':
-            actions[mainmenu.prompt_valid('Tervetuloa! Mitä tehdään?')]()
+    elif sys.argv[1] == "allru":
+        #Jos tarkoitus analysoida kaikki, mitä on. VIE KAUAN!
+        import utils
+        import groups.ru
+        quant=True
+        searchutils.StartLogger('/tmp/groups_ru.log')
+        counter = 0
+        for subgroupname, subgroup in groups.ru.subgroups.items():
+        #for subgroupname, subgroup in groups.ru.testgroups.items():
+            counter += 1
+            res_filename = '{}/ru/{}_svo_quantdata.json'.format(result_data_address, subgroupname)
+            if not os.path.isfile(res_filename):
+                searchutils.logging.info("STARTING "  + subgroup.name + " ({} / {})".format(counter, len(groups.ru.subgroups)))
+                subgroup.Analyze(quant)
+                searchutils.logging.info(subgroup.name + "DONE.")
+            else:
+                searchutils.logging.info(subgroup.name + "already analyzed, skipping...")
+    elif sys.argv[1] == "test":
+        print("Entering test mode....")
+        import utils
+        from groups.fi import subgroups
+        #from groups.ru import subgroups
+        subgroups['lc0a'].Analyze(True,True)
+        sys.exit(0)
+    elif len(sys.argv)>1:
+        import utils
+        if sys.argv[1] == "fi":
+            import groups.fi as agroups
+        if sys.argv[1] == "ru":
+            import groups.ru as agroups
+        subgroupname = sys.argv[2]
+        subgroup =  agroups.subgroups[subgroupname]
+        searchutils.StartLogger('/tmp/groups.log')
+        res_filename = '{}/fi/{}_svo_quantdata.json'.format(result_data_address, subgroupname)
+        searchutils.logging.info("STARTING "  + subgroup.name)
+        subgroup.Analyze(True)
+        searchutils.logging.info(subgroup.name + "DONE.")
+
+#    except IndexError:
+#        #Jos ajat ohjelmana ja valitset itse, mikä ryhmä analysoidaan
+#        mainmenu = menus.multimenu({'q':'lopeta','a':'analysoi yksittäisiä ryhmiä','k':'kerää dataa','kva':'Tallenna dataa kvantitatiivista analyysia varten'})
+#        actions  = {'a':ListAnalyzedGroups,'q':Quit,'k':CollectData,'kva':CollectQuantData}
+#        mainmenu.answer = ""
+#        while mainmenu.answer != 'q':
+#            actions[mainmenu.prompt_valid('Tervetuloa! Mitä tehdään?')]()
 
         ##Jos pitää testata pelkkää hakua:
         #import utils

@@ -119,8 +119,8 @@ def SVO(sloc,vloc,oloc):
     return False
 
 def SOV(sloc,vloc,oloc):
-    """Jos V tulee S:n ja O:n jälkeen ja O tulee S:n jälkeen, hyväksy mukaan"""
-    if (vloc > sloc and vloc > oloc) and (sloc < vloc):
+    """Jos V tulee S:n ja O:n jälkeen, O tulee S:n jälkeen ja S tulee ennen O:ta, hyväksy mukaan"""
+    if (vloc > sloc and vloc > oloc) and (sloc < vloc) and (sloc < oloc):
         return True
     return False
 

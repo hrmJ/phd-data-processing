@@ -202,6 +202,8 @@ class Connector():
             sourcetext = title[0][0]
         except ValueError:
             sourcetext = result.matchedword.sourcetextid
+        except IndexError:
+            sourcetext = "textid {}".format(text_id)
         except KeyError:
             if corpus == 'press_fi':
                 print('Korp-lähteen määrittäminen ongelmallista.')
