@@ -202,7 +202,7 @@ if __name__ == "__main__":
         for subgroupname, subgroup in groups.ru.subgroups.items():
         #for subgroupname, subgroup in groups.ru.testgroups.items():
             counter += 1
-            res_filename = '{}/ru/{}_svo_quantdata.json'.format(result_data_address, subgroupname)
+            res_filename = '{}/ru/{}_SVO_quantdata.json'.format(result_data_address, subgroupname)
             if not os.path.isfile(res_filename):
                 searchutils.logging.info("STARTING "  + subgroup.name + " ({} / {})".format(counter, len(groups.ru.subgroups)))
                 subgroup.Analyze(quant)
