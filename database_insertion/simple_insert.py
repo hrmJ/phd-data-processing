@@ -8,7 +8,7 @@ import time
 class InsData():
     def __init__(self, conllfile, metadatafile, dbname, lang, groupname='',corpusname=''):
         self.table = lang + '_conll'
-        self.con = psycopg(dbname,'juho')
+        self.con = psycopg(dbname,'test_user')
         self.groupname = groupname
         self.corpusname = corpusname
         self.GetMeta(metadatafile)

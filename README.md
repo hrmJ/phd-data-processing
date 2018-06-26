@@ -29,4 +29,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO test_user
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO test_user;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO test_user;
 GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO test_user;
+GRANT USAGE, SELECT ON SEQUENCE
 ```
+
+# Syöttö tietokantaan
+
+python3 database_insertion/simple_insert.py <conllinput> <references> <dbname> <lang> <groupname> <corpus name>
