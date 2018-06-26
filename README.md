@@ -34,4 +34,4 @@ GRANT USAGE, SELECT ON SEQUENCE
 
 # Syöttö tietokantaan
 
-python3 database_insertion/simple_insert.py <conllinput> <references> <dbname> <lang> <groupname> <corpus name>
+`python3 database_insertion/simple_insert.py <conllinput> <references> <dbname> <lang> <groupname> <corpus name>`

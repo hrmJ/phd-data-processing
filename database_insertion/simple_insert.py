@@ -50,6 +50,8 @@ class InsData():
 
     def PrepareConllToDb(self):
         self.segments = TrimList(re.split(TextPair.splitpattern,self.conllinput))
+        print(len(self.segments))
+        print(len(self.reflist))
         if len(self.segments)!=len(self.reflist):
             try:
                 logging.info("Ups! Tyhjiä segmenttejä tms. havaittu ryhmässä {}, tarkista esimerkiksi seuraava kohta:\n\n {} \n\n ".format(self.groupname, self.segments[self.segments.index('')-1]))
@@ -112,6 +114,7 @@ class InsData():
         itemlimit=200000
         start = 0
         end = itemlimit
+        print(len(self.rowlist))
         while len(self.rowlist)-end>0:
             rowportions.append(self.rowlist[start:end])
             end += itemlimit
@@ -171,8 +174,10 @@ elif (len(sys.argv)<5):
 
 
 if not isbulk:
+    print("starting a single file...")
     thisdata = InsData(*sys.argv[1:])
     if thisdata.PrepareConllToDb():
+        print("INSERTING!")
         thisdata.InsertToDb()
     else:
         logging.info('SKIPPING {} because of inconsistencies'.format(thisdata.groupname))
