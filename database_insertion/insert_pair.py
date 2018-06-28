@@ -12,7 +12,7 @@ class ArgumentError(Exception):
 class TextPair():
     """A text on its way to the database"""
     #splitpattern = re.compile(r"\d+\t![^\n]+[^\n]+\n\n?\d+\t![^\n]+\n\n?\d+\t![^\n]+\n\n?\d+\t![^\n]+\n\n")
-    splitpattern = re.compile(r"\d+\t![^\n]+\n\n?"*3 + r"\d+\t![^\n]+\n\n")
+    splitpattern = re.compile(r"\d+\t![^\n]+\n\n?"*13 + r"\d+\t![^\n]+\n\n")
     
     #splitpattern_long = re.compile(r"(\d+\t![^\n]+\n\n){4}")
 
