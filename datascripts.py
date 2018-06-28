@@ -184,7 +184,7 @@ if __name__ == "__main__":
         counter = 0
         for subgroupname, subgroup in groups.fi.subgroups.items():
             counter += 1
-            res_filename = '{}/fi/{}_svo_quantdata.json'.format(result_data_address, subgroupname)
+            res_filename = '{}/fi/{}_SVO_quantdata.json'.format(result_data_address, subgroupname)
             if not os.path.isfile(res_filename):
                 searchutils.logging.info("STARTING "  + subgroup.name + " ({} / {})".format(counter, len(groups.fi.subgroups)))
                 subgroup.Analyze(quant)
