@@ -2262,7 +2262,7 @@ class Sentence:
                 self.finiteverbs.append(word)
                 self.finitelemmas.append(word.lemma)
 
-   def ListPosListFeat(self):
+    def ListPosListFeat(self):
         fstring = ""
         for wkey, w in self.words.items():
             fstring += "[{}>>{}]".format(w.pos, w.feat)
