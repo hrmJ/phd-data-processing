@@ -9,6 +9,7 @@ subgroups= {'lc0a' : Group('lc0a','ru',{'lemma':('вчера',)}, nextcond=[['!t
             'lc1b' : Group('lc1b','ru',{'token':('недавно',)},lengthmeter=[0,0]),
             'lc2' : Group('lc2','ru',{'token':('утром', 'вечером')},prevcond=['!token',('вчера','сегодня','завтра')],secondnextcond=[['!token'],[['два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять', 'десять','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','половина']]],lengthmeter=[0,0]),
             'lc3' : Group('lc3','ru',{'token':('после',)},depcond=['token',('войны',)],lengthmeter=[0,1]),
+            'jp1' : Group('jp1','ru',{'token':('после',)},nextcond=['token',('нового',)], secondnextcond=['token',('года',)],lengthmeter=[0,1]),
             'lc4' : Group('lc4','ru',{'token':('с',)},depcond=['token',('пор',)],lengthmeter=[0,2]),
             'lc5' : Group('lc5','ru',{'token':('через','спустя')},depcond=['token',('лет', 'дней', 'суток', 'часов')],lengthmeter=[0,2]),
             'lc6' : Group('lc6','ru',{'token':('в',)},depcond=['token',('часа', 'часов')],prevcond=['!token',('сегодня','завтра','вчера','позавчера')],lengthmeter=[0,2]),
