@@ -16,10 +16,11 @@ synkkaa tietokantadumppi palvelimelle: `rsync --progress fumpfile.xx root@012321
 
 JOS käytät valmista cluster backup -dumppia, palauta se ajamalla: `psql -f dumpin_nimi postgres`
 
+luo  käyttäjä `test_user`, `test_password`
 
 
 ```
-CREATE USER test_user WITH PASSWORD 'test_password';
+CEATE USER test_user WITH PASSWORD 'test_password';
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO test_user;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO test_user;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO test_user;
