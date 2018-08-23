@@ -12,9 +12,10 @@ HUOM! ks. install.sh
 
 # Psql-valmistelu
 
-synkkaa tietokantadumppi palvelimelle: `rsync --progress fumpfile.xx root@012321.123.123213:/tmp/`
+synkkaa tietokantadumppi palvelimelle: `rsync --progress dumpfile.xx root@012321.123.123213:/tmp/`
 
 JOS käytät valmista cluster backup -dumppia, palauta se ajamalla: `psql -f dumpin_nimi postgres`
+(ei toimi: Tai jos käytössä vanhempi psql-versio, niin: `pg_restore -f dumpin_nimi`)
 
 luo  käyttäjä `test_user`, `test_password`
 
