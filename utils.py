@@ -8,7 +8,7 @@ import time
 from datascripts import result_data_address
 
 rawkorpaddress = '/tmp'
-saved_data_address = '/tmp'
+saved_data_address = '/root/saved_data'
 
 def LoadKorpData(fnames, outputtext=False):
     korpdata = list()
