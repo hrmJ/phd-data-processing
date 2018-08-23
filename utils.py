@@ -1,11 +1,10 @@
-from datascripts import searchutils, glob
 import filters
 import sys
 import os
 import re
 import gc
 import time
-from datascripts import result_data_address
+from process_data import result_data_address, searchutils, glob
 
 rawkorpaddress = '/tmp'
 saved_data_address = '/root/saved_data'
@@ -50,7 +49,7 @@ class Group():
         self.ext_data = dict()
         self.corpora = searchutils.CorpusDict(self.lang)
         self.Initsearch(name_in_db)
-        self.cons = cons.connections[lang]
+        #self.cons = cons.connections[lang]
         self.results = dict()
         self.currentsearch.ConditionColumns = condcol
         self.currentsearch.beforecommacountsaslast = countcomma
@@ -121,7 +120,8 @@ class Group():
         self.Load()
         for corpus, data in self.corpora.items():
             if not data:
-                print('No pre-saved data, therefore QUERYING now {} for {}'.format(corpus, self.name))
+                print('No pre-saved data. Quitting.')
+                return False
                 con = self.cons[corpus]
                 nogroup = False
                 self.currentsearch.con = con
@@ -132,6 +132,7 @@ class Group():
                 #SET the data:
                 self.corpora[corpus] = self.currentsearch.results
                 self.currentsearch.Reset()
+        return True
 
     def GetSentences(self, quant=False):
         print("Filtering out SVO and SOV sentences for {}.{}".format(self.lang, self.name))
@@ -157,7 +158,8 @@ class Group():
                                     {
                                         'location':result.TransitiveSentenceDistancies(True,self.lang,result.matchedsentence,order=order),
                                         'corpus': corpus, 
-                                        'sourcetext':cons.GetMetaRow(result, corpus, self.lang)
+                                        'sourcetext': 'not defined' 
+                                        #'sourcetext':cons.GetMetaRow(result, corpus, self.lang)
                                     }
                                     )
                                 )
@@ -175,9 +177,9 @@ class Group():
         """Koko analyysiprosessi kaikkine alaryhmineen, niin että lopuksi tiedot tallennetaan 
         alaryhmittäin json-tiedostoihin"""
         searchutils.Search.lengthmeter = self.lengthmeter
-        self.GetData()
-        self.GetSentences(quant)
-        self.SaveResults(quant)
+        if self.GetData():
+            self.GetSentences(quant)
+            self.SaveResults(quant)
 
 
 class Connector():
@@ -270,11 +272,3 @@ def CleanSerializedData(fname):
         with open(fname, "w") as f:
             f.write("[\n" + lines)
 
-
-if len(sys.argv)>1 and __name__ == "__main__":
-    kd = LoadKorpData("{}/*".format(sys.argv[1]), True)
-else:
-    if len(sys.argv)>1:
-        if (sys.argv[1]=='test'):
-            cons = Connector(testlang='fi')
-    cons = Connector()

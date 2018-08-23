@@ -1,7 +1,7 @@
 import re
 
 try:
-    from datascripts import searchutils
+    from process_data.py import searchutils
 except ImportError:
     print('Varmista, että searchutils tuotu oikein...')
 
