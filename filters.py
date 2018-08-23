@@ -1,9 +1,6 @@
 import re
+import searchutils
 
-try:
-    from process_data.py import searchutils
-except ImportError:
-    print('Varmista, että searchutils tuotu oikein...')
 
 class Filter():
 
